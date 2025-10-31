@@ -1,0 +1,4 @@
+{
+  "name": "tecwebpractica",
+  "site": { "bucket": "./dist" }
+}
