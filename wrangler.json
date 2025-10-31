@@ -1,4 +1,6 @@
 {
-  "name": "tecwebpractica",
-  "site": { "bucket": "./dist" }
+  "name": "tenki",
+  "site": {
+    "bucket": "./dist"
+  }
 }
