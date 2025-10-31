@@ -6,7 +6,6 @@ function WeatherApp() {
   return (
     <div id="todalawea">
       <Map position={position} />
-      <Weather position={position} />
     </div>
   );
 }

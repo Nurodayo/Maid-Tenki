@@ -7,45 +7,51 @@ function Weather({ position }) {
 
   const [tempA, setTempA] = useState(0);
   const [rainA, setRainA] = useState(0);
+  // const [temps, setTemps] = useState([]);
+  // const [rains, setRains] = useState([]);
+  // const [times, setTimes] = useState([]);
 
+  useEffect(() => {
+    if (data) {
+      const temps = [...data.hourly.temperature_2m];
+      const rains = [...data.hourly.rain];
+      const times = data.hourly.time;
+
+      const yearC = currentTime.getFullYear();
+      const dayC = currentTime.getDate();
+      const monthC = currentTime.getMonth();
+      const hourC = currentTime.getHours();
+
+      const obj = times.find((time) => {
+        return (
+          time.getFullYear() === yearC &&
+          time.getDate() === dayC &&
+          time.getHours() === hourC &&
+          time.getMonth() === monthC
+        );
+      });
+      // fin de la funcion para obtener la ultima hora
+      const [tempC, rainC] = (() => {
+        const i = times.indexOf(obj);
+        console.log(i);
+
+        return [temps[i], rains[i]];
+      })();
+      console.log("Wazaaaaaaa");
+      console.log(obj);
+
+      setTempA(tempC);
+      setRainA(rainC);
+    } else {
+      return;
+    }
+  }, [data, currentTime]);
   if (!data) {
-    useEffect(() => {
-      console.log("Loading data...");
-    }, [currentTime]);
-
-    return <p>Loading weather data...</p>;
+    return <p>Cargando...</p>;
   }
   const temps = [...data.hourly.temperature_2m];
   const rains = [...data.hourly.rain];
   const times = data.hourly.time;
-
-  useEffect(() => {
-    const yearC = currentTime.getFullYear();
-    const dayC = currentTime.getDate();
-    const monthC = currentTime.getMonth();
-    const hourC = currentTime.getHours();
-
-    const obj = times.find((time) => {
-      return (
-        time.getFullYear() === yearC &&
-        time.getDate() === dayC &&
-        time.getHours() === hourC &&
-        time.getMonth() === monthC
-      );
-    });
-    // fin de la funcion para obtener la ultima hora
-    const [tempC, rainC] = (() => {
-      const i = times.indexOf(obj);
-      console.log(i);
-
-      return [temps[i], rains[i]];
-    })();
-    console.log("Wazaaaaaaa");
-    console.log(obj);
-
-    setTempA(tempC);
-    setRainA(rainC);
-  }, [currentTime]);
   console.log(currentTime);
   console.log(data);
   return (
